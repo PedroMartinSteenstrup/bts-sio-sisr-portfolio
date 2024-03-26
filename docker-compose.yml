@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  sample:
+    container_name: sample
+    build:
+      context: ./portfolio
+      dockerfile: ../Dockerfile
+      target: prod
+    # volumes:
+    #   - '.:/app'
+    #   - '/app/node_modules'
+    ports:
+      - 3001:80
+    environment:
+      - CHOKIDAR_USEPOLLING=true
