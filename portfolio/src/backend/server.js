@@ -9,16 +9,10 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
 });
 
-app.get('/', (req, res) => {
-  getCourses().then((courses) => {
-    res.send(`This is the server endpoint! ` + courses[0][1])
-  });
-  // res.send(`This is the server endpoint! `+courses)
-});
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`)
-});
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`)
+// });
 
 //get all merchants our database
 const getCourses = async () => {

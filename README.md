@@ -16,7 +16,10 @@ Cela va extraire les variables d'environnement du fichier `.env` et lancer le se
 Celui-ci sera immédiatement disponible à l'adresse http://localhost:3000/
 
 le serveur:
-`node --env-file=../.env src/backend/server.js`
+```shell
+node --env-file=../.env src/backend/server.js`
+node --env-file=../.env.local src/index.js
+```
 
 ## site le déploiement
 

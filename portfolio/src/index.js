@@ -26,6 +26,14 @@ app.get('/', (req, res) => {
   })
 })
 
+
+app.get('/test', (req, res) => {
+  model.getCourses().then((courses) => {
+    res.send(`This is the server endpoint! ` + courses[0][1])
+  });
+  // res.send(`This is the server endpoint! `+courses)
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)
 });
