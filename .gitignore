@@ -10,7 +10,12 @@ logs
 
 node_modules
 portfolio/node_modules
+portfolio/src/backend/node_modules
+
+portfolio/node_modules
 bower_components
+.env
+portfolio.session.sql
 
 *.sublime*
 
