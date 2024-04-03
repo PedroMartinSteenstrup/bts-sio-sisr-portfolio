@@ -9,6 +9,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # bring the code
 COPY public/ /app/public
+COPY scripts/ /app/scripts
 COPY src/ /app/src
 
 # install app dependencies

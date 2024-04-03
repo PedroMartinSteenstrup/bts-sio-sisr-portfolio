@@ -1,16 +1,17 @@
 version: '3.8'
 
 services:
-
+  
   sample:
     container_name: sample
     build:
       context: ./portfolio
       dockerfile: ../Dockerfile
-      target: prod
-    # volumes:
-    #   - '.:/app'
-    #   - '/app/node_modules'
+      target: build
+    # comment out volumes when target is prod and not build
+    volumes:
+      - './portfolio:/app'
+    # comment out until here
     ports:
       - 3001:80
     networks:
@@ -20,10 +21,10 @@ services:
   database:
     image: postgres:16.2
     environment:
+    # using an .env file, but leaving defaults for easier first time run
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       POSTGRES_DB: ${POSTGRES_DB:-portfolio}
-      
     volumes:
        - postgres:/data/postgres
     ports:
