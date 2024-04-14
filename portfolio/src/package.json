@@ -1,0 +1,36 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "pg": "^8.11.5"
+  },
+  "scripts": {
+    "build-db": ". ../../.env && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/build-db.sql",
+    "clean-db": ". ../../.env && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/clean-db.sql",
+    "build-db-local": ". ../../.env.local && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ../scripts/build-db.sql",
+    "clean-db-local": ". ../../.env.local && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ../scripts/clean-db.sql",
+    "build-db-docker": ". ../../.env.docker && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/build-db.sql",
+    "clean-db-docker": ". ../../.env.docker && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/clean-db.sql"
+  },
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "BTS Portfolio 2ème année",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroMartinSteenstrup/bts-sio-sisr-portfolio.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "bts",
+    "portfolio"
+  ],
+  "author": "Pedro Martin-Steenstrup",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroMartinSteenstrup/bts-sio-sisr-portfolio/issues"
+  },
+  "homepage": "https://github.com/PedroMartinSteenstrup/bts-sio-sisr-portfolio#readme"
+}

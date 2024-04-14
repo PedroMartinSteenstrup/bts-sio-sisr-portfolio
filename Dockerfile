@@ -13,13 +13,15 @@ COPY scripts/ /app/scripts
 COPY src/ /app/src
 
 # install app dependencies
-COPY package*.json .
+COPY src/package*.json .
+
+WORKDIR /app/src
 
 RUN npm install
-RUN npm run build
+# RUN npm run build
 
 # # start app
-# CMD ["npm", "start"]
+CMD ["node", "index.js"]
 
 # production environment
 FROM nginx:stable-alpine as prod

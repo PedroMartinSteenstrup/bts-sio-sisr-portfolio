@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<title>The Main Experience Page</title>
+</head>
+<body>
+<h1> This is the Main Experience Page </h1>
+<!-- <a href="/author-home">Author Home Page</a> -->
+<br>
+<h3>List of experiences</h3>
+<table>
+    <tr>
+        <th>#ID</th>
+        <th>Période</th>
+        <th>Titre</th>
+        <th>Description</th>
+    </tr>
+    <% for(var i=0; i < experiences.length; i++) { %>
+            <tr>
+                <td><%= (i+1) %></td>
+                <td><%= experiences[i].c_année_début +`-`+ experiences[i].c_année_fin %></td>
+                <td><%= experiences[i].c_titre +` @`+ experiences[i].c_employeur %></td>
+                <td><%= experiences[i].c_description %></td>
+        </tr>
+            </tr>
+    <% } %>
+</table>
+<!-- <a href="/reader-home">Reader Home Page</a> -->
+</p>
+</body>
+</html>

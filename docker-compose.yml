@@ -3,6 +3,8 @@ version: '3.8'
 services:
   
   sample:
+    env_file:
+      - .env.docker
     container_name: sample
     build:
       context: ./portfolio
@@ -14,11 +16,14 @@ services:
     # comment out until here
     ports:
       - 3001:80
+      - 3002:3001
     networks:
       - portfolio
     environment:
       - CHOKIDAR_USEPOLLING=true
   database:
+    env_file:
+      - .env.docker
     image: postgres:16.2
     environment:
     # using an .env file, but leaving defaults for easier first time run

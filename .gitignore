@@ -8,6 +8,8 @@ logs
 **/*.backup.*
 **/*.back.*
 
+portfolio/build
+
 node_modules
 portfolio/node_modules
 portfolio/src/backend/node_modules
