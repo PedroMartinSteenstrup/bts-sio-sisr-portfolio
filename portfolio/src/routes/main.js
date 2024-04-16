@@ -14,22 +14,9 @@ router.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
-router.get('/', (req, res) => {
-  model.getCourses()
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
-})
-
 
 router.get('/test', (req, res) => {
-  model.getCourses().then((courses) => {
-    res.send(`This is the server endpoint! ` + courses[0][1])
-  });
-  // res.send(`This is the server endpoint! `+courses)
+  res.send(`This is the server endpoint on port ` + port)
 });
 
 

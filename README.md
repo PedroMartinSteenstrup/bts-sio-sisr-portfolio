@@ -3,7 +3,7 @@ BTS SIO SISR 2e Année
 
 # Travailler localement
 
-## seulement le site
+## Tester le site
 
 Le rendu le plus immédiat est de lancer le serveur localement avec la commande
 `npm start`
@@ -21,7 +21,7 @@ node --env-file=../.env src/backend/server.js`
 node --env-file=../.env.local src/index.js
 ```
 
-## site le déploiement
+## Tester le déploiement
 
 Pour tester le site dans une configuration plus proche du déploiement réel, il est possible d'utiliser docker compose.
 

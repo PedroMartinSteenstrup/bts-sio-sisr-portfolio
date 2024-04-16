@@ -2,28 +2,27 @@ version: '3.8'
 
 services:
   
-  sample:
+  web:
     env_file:
-      - .env.docker
-    container_name: sample
+      - .env
+    container_name: web
     build:
       context: ./portfolio
       dockerfile: ../Dockerfile
       target: build
-    # comment out volumes when target is prod and not build
+    # comment out volumes when target is prod
     volumes:
       - './portfolio:/app'
-    # comment out until here
+    # comment out ports in prod, traffic only through proxy
     ports:
-      - 3001:80
-      - 3002:3001
+      - ${NODE_PORT}:${NODE_PORT}
     networks:
       - portfolio
     environment:
       - CHOKIDAR_USEPOLLING=true
   database:
     env_file:
-      - .env.docker
+      - .env
     image: postgres:16.2
     environment:
     # using an .env file, but leaving defaults for easier first time run
@@ -32,12 +31,39 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-portfolio}
     volumes:
        - postgres:/data/postgres
+    # comment out for prod, we don't need access
     ports:
-      - "5433:5432"
+      - 5433:${POSTGRES_PORT}
     networks:
       - portfolio
     restart: unless-stopped
-
+  server:
+    env_file:
+      - .env
+    environment:
+      NGINX_ENVSUBST_TEMPLATE_SUFFIX: ".conf"
+    build:
+      context: ./portfolio/nginx
+      dockerfile: Dockerfile
+    ports:
+      - 8005:${NGINX_PORT}
+    # volumes:
+    #   - certbot-etc:/etc/letsencrypt
+    #   - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - web
+    networks:
+      - portfolio
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   volumes:
+  #     - certbot-etc:/etc/letsencrypt
+  #     - certbot-var:/var/lib/letsencrypt
+  #     - web-root:/var/www/html
+  #   depends_on:
+  #     - web
+  #   command: certonly --webroot --webroot-path=/var/www/html --email user@email-domain.com --agree-tos --no-eff-email --staging -d node.exampledomain.com 
 networks:
   portfolio:
     driver: bridge
