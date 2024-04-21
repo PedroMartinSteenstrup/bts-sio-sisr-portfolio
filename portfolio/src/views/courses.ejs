@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    <%- include('styles'); %>
 <title>The Main Courses Page</title>
 </head>
 <body>
@@ -8,6 +9,7 @@
 <!-- <a href="/author-home">Author Home Page</a> -->
 <br>
 <h3>List of courses</h3>
+<div style="overflow-x: auto;">
 <table>
     <tr>
         <th>#ID</th>
@@ -25,6 +27,7 @@
             </tr>
     <% } %>
 </table>
+</div>
 <!-- <a href="/reader-home">Reader Home Page</a> -->
 </p>
 </body>

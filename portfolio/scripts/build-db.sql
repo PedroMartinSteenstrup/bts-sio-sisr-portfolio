@@ -1,5 +1,7 @@
 -- autocommit is deactivated
 BEGIN TRANSACTION;
+SET datestyle to SQL,
+    DMY;
 SET search_path TO public;
 CREATE TABLE IF NOT EXISTS settings (
     id SERIAL PRIMARY KEY,
@@ -58,4 +60,54 @@ VALUES (
         'Wise',
         'Data Analyst',
         'Mise en place d''indicateurs de performance, de solutions de visualisation et de scripts d''extraction de données'
+    );
+DROP TABLE IF EXISTS realisations;
+CREATE TABLE IF NOT EXISTS realisations (
+    id SERIAL PRIMARY KEY,
+    r_début DATE NOT NULL,
+    r_fin DATE NOT NULL,
+    r_intitule TEXT NOT NULL,
+    r_description TEXT NOT NULL,
+    est_gestion_patrimoine BOOLEAN,
+    est_response_incidents BOOLEAN,
+    est_presence_en_ligne BOOLEAN,
+    est_travail_mode_projet BOOLEAN,
+    est_deploiement_service BOOLEAN,
+    est_developpement_pro BOOLEAN
+);
+INSERT INTO realisations (
+        r_début,
+        r_fin,
+        r_intitule,
+        r_description,
+        est_gestion_patrimoine,
+        est_response_incidents,
+        est_presence_en_ligne,
+        est_travail_mode_projet,
+        est_deploiement_service,
+        est_developpement_pro
     )
+VALUES (
+        '05-03-2024',
+        '30-04-2024',
+        'Création d''un site portfolio dans le cadre de l''épreuve E4',
+        'Express, nodejs, postgres, template, conteneurisé',
+        FALSE,
+        FALSE,
+        TRUE,
+        TRUE,
+        TRUE,
+        TRUE
+    ),
+    (
+        '05-03-2024',
+        '30-04-2024',
+        'Automatisation de la gestion du code, des resources (utilisation du paradigme dit IaC – Infrastructure as Code) ainsi que du déploiement',
+        'Github Actions, Terraform, Ansible',
+        TRUE,
+        FALSE,
+        FALSE,
+        FALSE,
+        TRUE,
+        TRUE
+    );
