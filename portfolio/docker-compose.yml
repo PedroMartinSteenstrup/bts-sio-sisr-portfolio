@@ -40,6 +40,7 @@ services:
       - portfolio
     restart: unless-stopped
   server:
+    # restart: always
     env_file:
       - .env
     environment:
@@ -48,10 +49,10 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - ${NGINX_PORT}:${NGINX_PORT}
+      - ${NGINX_PORT_HTTP}:${NGINX_PORT_HTTP}
+      - ${NGINX_PORT_HTTPS}:${NGINX_PORT_HTTPS}
     volumes:
-      - origin_ca.pem:/etc/ssl/origin_ca.pem:ro
-      - origin_ca.key:/etc/ssl/origin_ca.key:ro
+      - ./nginx/certs:/etc/nginx/certs
     #   - certbot-etc:/etc/letsencrypt
     #   - certbot-var:/var/lib/letsencrypt
     depends_on:
