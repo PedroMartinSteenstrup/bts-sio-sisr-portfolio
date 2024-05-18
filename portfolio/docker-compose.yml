@@ -48,8 +48,10 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - 80:${NGINX_PORT}
-    # volumes:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    volumes:
+      - origin_ca.pem:/etc/ssl/origin_ca.pem:ro
+      - origin_ca.key:/etc/ssl/origin_ca.key:ro
     #   - certbot-etc:/etc/letsencrypt
     #   - certbot-var:/var/lib/letsencrypt
     depends_on:
