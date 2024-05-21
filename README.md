@@ -37,3 +37,9 @@ L'image pour le site en production requiert de modifier le fichier docker-compos
 Cette image est la seule nécessaire.
 
 La base de données est hebergée en dehors du serveur.
+
+Si les données sont effacées, alors la commande suivante va les reproduire.
+```shell
+./.env
+PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/build-db.sql
+```

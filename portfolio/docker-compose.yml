@@ -10,12 +10,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build
-    # comment out volumes when target is prod
-    # volumes:
-    #   - './src:/app'
     # comment out ports in prod, traffic only through proxy
-    ports:
-      - ${NODE_PORT}:${NODE_PORT}
+    # ports:
+    #   - ${NODE_PORT}:${NODE_PORT}
     networks:
       - portfolio
     environment:
@@ -35,7 +32,7 @@ services:
        - postgres:/data/postgres
     # comment out for prod, we don't need access
     ports:
-      - 5433:${POSTGRES_PORT}
+      - "127.0.0.1:5433:${POSTGRES_PORT}"
     networks:
       - portfolio
     restart: unless-stopped
@@ -53,22 +50,10 @@ services:
       - ${NGINX_PORT_HTTPS}:${NGINX_PORT_HTTPS}
     volumes:
       - ./nginx/certs:/etc/nginx/certs
-    #   - certbot-etc:/etc/letsencrypt
-    #   - certbot-var:/var/lib/letsencrypt
     depends_on:
       - web
     networks:
       - portfolio
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - certbot-etc:/etc/letsencrypt
-  #     - certbot-var:/var/lib/letsencrypt
-  #     - web-root:/var/www/html
-  #   depends_on:
-  #     - web
-  #   command: certonly --webroot --webroot-path=/var/www/html --email user@email-domain.com --agree-tos --no-eff-email --staging -d node.exampledomain.com 
 networks:
   portfolio:
     driver: bridge

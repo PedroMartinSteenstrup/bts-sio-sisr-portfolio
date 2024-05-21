@@ -6,18 +6,19 @@
 </head>
 <body>
 <h1> Liste des réalisations </h1>
+<a href="/">Accueil</a>
 <br>
 <table>
     <tr>
         <th>#ID</th>
         <th>Période</th>
         <th>Titre</th>
-        <th>Description</th>
+        <th>Mots-Clés</th>
         <th>Action</th>
     </tr>
     <% for(var i=0; i < realisations.length; i++) { %>
-        <% start_date = realisations[i].r_début.toLocaleDateString() %>
-        <% end_date = realisations[i].r_fin.toLocaleDateString() %>
+        <% start_date = realisations[i].r_début.toLocaleDateString('fr-FR') %>
+        <% end_date = realisations[i].r_fin.toLocaleDateString('fr-FR') %>
             <tr>
                 <td><%= (i+1) %></td>
                 <td><%= start_date +` - `+ end_date %></td>

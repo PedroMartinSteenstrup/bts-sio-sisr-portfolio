@@ -8,7 +8,7 @@
     "serve-favicon": "^2.5.0"
   },
   "scripts": {
-    "start-local": "node -r dotenv/config index.js dotenv_config_path=./../../.env.local",
+    "start-local": "node -r dotenv/config index.js dotenv_config_path=./../.env.local",
     "build-db": ". ../.env && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/build-db.sql",
     "clean-db": ". ../.env && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/clean-db.sql",
     "build-db-local": ". ../../.env.local && PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ../scripts/build-db.sql",

@@ -5,6 +5,12 @@ const getData = require("../db").getData;
 /**
  * @desc Lister toutes les réalisations recensées
  */
+
+// Redirect route
+router.get('/E4', (req, res) => {
+    res.redirect(301, '/realisations');
+});
+
 router.get("/realisations", (req, res, next) => {
     // Define the query
     SQLquery = "SELECT * FROM realisations ORDER BY r_début DESC;"
