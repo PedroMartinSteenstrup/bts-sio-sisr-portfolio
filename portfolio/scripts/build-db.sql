@@ -78,14 +78,15 @@ CREATE TABLE IF NOT EXISTS realisations (
     est_presence_en_ligne BOOLEAN,
     est_travail_mode_projet BOOLEAN,
     est_deploiement_service BOOLEAN,
-    est_developpement_pro BOOLEAN
+    est_developpement_pro BOOLEAN,
+    realisations_docs_id INT
 );
 
 CREATE TABLE IF NOT EXISTS realisations_docs (
     id SERIAL PRIMARY KEY,
     realisation_id INT,
     path VARCHAR(255),
-    FOREIGN KEY (realisation_id) REFERENCES realisations(id)
+    FOREIGN KEY (realisation_id) REFERENCES realisations(realisations_docs_id)
 );
 
 INSERT INTO realisations (
@@ -98,7 +99,8 @@ INSERT INTO realisations (
         est_presence_en_ligne,
         est_travail_mode_projet,
         est_deploiement_service,
-        est_developpement_pro
+        est_developpement_pro,
+        realisations_docs_id
     )
 VALUES (
         '05-03-2024',
@@ -110,7 +112,8 @@ VALUES (
         TRUE,
         TRUE,
         TRUE,
-        TRUE
+        TRUE,
+        1
     ),
     (
         '05-03-2024',
@@ -122,7 +125,8 @@ VALUES (
         FALSE,
         FALSE,
         TRUE,
-        TRUE
+        TRUE,
+        2
     ),
     (
         '05-03-2024',
@@ -134,7 +138,8 @@ VALUES (
         TRUE,
         TRUE,
         TRUE,
-        FALSE
+        FALSE,
+        3
     ),
     (
         '01-09-2023',
@@ -146,7 +151,8 @@ VALUES (
         FALSE,
         FALSE,
         FALSE,
-        TRUE
+        TRUE,
+        4
     ),
     (
         '15-09-2022',
@@ -158,7 +164,8 @@ VALUES (
         FALSE,
         TRUE,
         TRUE,
-        TRUE
+        TRUE,
+        5
     ),
     (
         '01-09-2022',
@@ -170,7 +177,8 @@ VALUES (
         FALSE,
         FALSE,
         FALSE,
-        TRUE
+        TRUE,
+        6
     ),
     (
         '20-04-2023',
@@ -182,7 +190,8 @@ VALUES (
         FALSE,
         TRUE,
         FALSE,
-        FALSE
+        FALSE,
+        7
     ),
     (
         '20-04-2023',
@@ -194,7 +203,8 @@ VALUES (
         FALSE,
         TRUE,
         TRUE,
-        FALSE
+        FALSE,
+        8
     ),
     (
         '04-11-2023',
@@ -206,7 +216,8 @@ VALUES (
         FALSE,
         TRUE,
         TRUE,
-        FALSE
+        FALSE,
+        9
     ),
     (
         '16-02-2022',
@@ -218,7 +229,8 @@ VALUES (
         FALSE,
         TRUE,
         FALSE,
-        FALSE
+        FALSE,
+        10
     ),
     (
         '01-08-2022',
@@ -230,7 +242,8 @@ VALUES (
         FALSE,
         TRUE,
         FALSE,
-        FALSE
+        FALSE,
+        11
     ),
     (
         '15-02-2024',
@@ -242,7 +255,8 @@ VALUES (
         FALSE,
         TRUE,
         FALSE,
-        FALSE
+        FALSE,
+        12
     ),
     (
         '30-01-2024',
@@ -254,7 +268,8 @@ VALUES (
         FALSE,
         TRUE,
         TRUE,
-        TRUE
+        TRUE,
+        13
     ),
     (
         '03-12-2023',
@@ -266,7 +281,8 @@ VALUES (
         TRUE,
         TRUE,
         TRUE,
-        TRUE
+        TRUE,
+        14
     );
 
     COMMIT;
