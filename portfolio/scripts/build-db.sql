@@ -1,8 +1,16 @@
 -- autocommit is deactivated
+-------------- certaines dates étaient malformées, ou type US
 SET datestyle to SQL,
     DMY;
+
+-------------- tout faire dans une grand transaction
 BEGIN TRANSACTION;
 SET search_path TO public;
+
+---------------------------------------------
+-------------- CREER LES TABLES -------------
+---------------------------------------------
+
 CREATE TABLE IF NOT EXISTS settings (
     id SERIAL PRIMARY KEY,
     set_name TEXT NOT NULL,
@@ -15,6 +23,48 @@ CREATE TABLE IF NOT EXISTS courses (
     c_description TEXT NOT NULL,
     c_année TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS experiences (
+    id SERIAL PRIMARY KEY,
+    c_année_début TEXT NOT NULL,
+    c_année_fin TEXT NOT NULL,
+    c_employeur TEXT NOT NULL,
+    c_titre TEXT NOT NULL,
+    c_description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS realisations (
+    id SERIAL PRIMARY KEY,
+    r_début DATE NOT NULL,
+    r_fin DATE NOT NULL,
+    r_intitule TEXT NOT NULL,
+    r_description TEXT NOT NULL,
+    est_gestion_patrimoine BOOLEAN,
+    est_response_incidents BOOLEAN,
+    est_presence_en_ligne BOOLEAN,
+    est_travail_mode_projet BOOLEAN,
+    est_deploiement_service BOOLEAN,
+    est_developpement_pro BOOLEAN,
+    realisation_id INT UNIQUE
+);
+CREATE TABLE IF NOT EXISTS realisations_docs (
+    id SERIAL PRIMARY KEY,
+    realisation_id INT,
+    media_type VARCHAR(15),
+    media_path VARCHAR(255),
+    media_key VARCHAR(100),
+    FOREIGN KEY (realisation_id) REFERENCES realisations(realisation_id)
+);
+CREATE TABLE IF NOT EXISTS utilisateurs (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(50),
+    m2p_hash text not null UNIQUE,
+    cree_le TIMESTAMPTZ NOT NULL default now()
+);
+
+-----------------------------------------------
+------------- INSERTS CI-DESSOUS --------------
+-----------------------------------------------
+
 INSERT INTO courses (c_bloc, c_titre, c_description, c_année)
 VALUES (
         'Bloc 1',
@@ -28,14 +78,7 @@ VALUES (
         'Le Bloc 2 de compétences professionnelles option SISR « Administration des systèmes et des réseaux » vous permettra de construire les savoirs et savoir-faire liés à la conception, à l''installation et à l''administration d''une infrastructure réseau pour répondre aux besoins d''une organisation cliente. Il vous permettra également de consolider les techniques de résolution d''incidents liés aux composants réseaux, systèmes et services et de perfectionner les techniques de rédaction d''un compte rendu, d''une documentation, d''une procédure d''installation et de configuration.',
         '2 Année'
     );
-CREATE TABLE IF NOT EXISTS experiences (
-    id SERIAL PRIMARY KEY,
-    c_année_début TEXT NOT NULL,
-    c_année_fin TEXT NOT NULL,
-    c_employeur TEXT NOT NULL,
-    c_titre TEXT NOT NULL,
-    c_description TEXT NOT NULL
-);
+
 INSERT INTO experiences (
         c_année_début,
         c_année_fin,
@@ -64,27 +107,7 @@ VALUES (
         'Data Analyst',
         'Mise en place d''indicateurs de performance, de solutions de visualisation et de scripts d''extraction de données'
     );
-CREATE TABLE IF NOT EXISTS realisations (
-    id SERIAL PRIMARY KEY,
-    r_début DATE NOT NULL,
-    r_fin DATE NOT NULL,
-    r_intitule TEXT NOT NULL,
-    r_description TEXT NOT NULL,
-    est_gestion_patrimoine BOOLEAN,
-    est_response_incidents BOOLEAN,
-    est_presence_en_ligne BOOLEAN,
-    est_travail_mode_projet BOOLEAN,
-    est_deploiement_service BOOLEAN,
-    est_developpement_pro BOOLEAN,
-    realisation_id INT UNIQUE
-);
-CREATE TABLE IF NOT EXISTS realisations_docs (
-    id SERIAL PRIMARY KEY,
-    realisation_id INT,
-    media_type VARCHAR(15),
-    media_path VARCHAR(255),
-    FOREIGN KEY (realisation_id) REFERENCES realisations(realisation_id)
-);
+
 INSERT INTO realisations (
         r_début,
         r_fin,
@@ -280,8 +303,8 @@ VALUES (
         TRUE,
         14
     );
-INSERT INTO realisations_docs (realisation_id, media_type, media_path)
-VALUES (
-    1, 'logo', 'logo_linkedin.svg'
-);
+-- INSERT INTO realisations_docs (realisation_id, media_type, media_path)
+-- VALUES (
+--     1, 'logo', 'logo_linkedin.svg', 'logo_linkedin.svg'
+-- );
 COMMIT;

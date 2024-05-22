@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const getData = require("../db").getData;
+const getData = require("../utils_db").getData;
 
 /**
  * @desc Display all the users

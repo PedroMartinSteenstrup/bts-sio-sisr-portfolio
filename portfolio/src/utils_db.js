@@ -31,7 +31,7 @@ const getData = async (sql_query, values) => {
 };
 
 /**
- * Inserts data into the specified table.
+ * Insérer données dans une table.
  * @param {string} sql_query - The SQL query to execute.
  * @param {Array} values - The values to insert.
  * @returns {Promise<object>} - A promise that resolves with the result of the query.

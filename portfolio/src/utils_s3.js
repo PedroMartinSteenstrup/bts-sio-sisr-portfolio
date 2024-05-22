@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const insertData = require("./db").insertData;
+const insertData = require("./utils_db").insertData;
 
 // Configure the AWS SDK for OVH Object Storage
 const s3 = new AWS.S3({
@@ -12,6 +12,7 @@ const s3 = new AWS.S3({
 async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
     const fileName = require('path').basename(filePath);
     const fs = require('fs');
+    const re = new RegExp('https:\/\/portfolio-bts\.s3\.rbx\.io\.cloud\.ovh\.net\/([a-zA-Z.]*)')
 
     // Read the file
     const fileContent = fs.readFileSync(filePath);
@@ -26,10 +27,11 @@ async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
     try {
         const uploadResult = await s3.upload(params).promise();
         const fileUrl = uploadResult.Location;
+        const filekey = uploadResult.Key;
         const mediaType = "logo";
 
-        const sqlQuery = 'INSERT INTO realisations_docs (realisation_id, media_type, media_path) VALUES ($1, $2, $3) RETURNING realisation_id';
-        const values = [realisationId, mediaType, fileUrl]
+        const sqlQuery = 'INSERT INTO realisations_docs (realisation_id, media_type, media_path, media_key) VALUES ($1, $2, $3, $4) RETURNING realisation_id';
+        const values = [realisationId, mediaType, fileUrl, filekey]
         // Save the file path in the database
         const result = await insertData(sqlQuery, values)
             .then(result => {

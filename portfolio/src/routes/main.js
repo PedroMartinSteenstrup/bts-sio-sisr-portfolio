@@ -16,8 +16,11 @@ router.get("/", (req, res) => {
 
 
 router.get('/test', (req, res) => {
-  res.send(`This is the server endpoint on port ` + port)
+  res.send(`This is the server endpoint on port ` + process.env.NODE_PORT)
 });
+
+router.get('/settings', (req, res) => {
+})
 
 
 //////////////////////////////////////////////////////
