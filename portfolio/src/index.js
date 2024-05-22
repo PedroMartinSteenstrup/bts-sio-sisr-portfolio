@@ -24,6 +24,13 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy", "default-src 'self' img-src 'self' script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/ style-src 'self' 'unsafe-inline' font-src 'self' object-src 'none'"
+  );
+  next();
+});
+
 // Add all the route handlers to the app 
 const mainRoutes = require('./routes/main');
 app.use(mainRoutes);

@@ -83,6 +83,10 @@
     <embed src="<%= file.media_path %>" type="application/pdf" width="100%" height="600px" />
 <% } else if (file.media_path.endsWith('.txt')) { %>
     <iframe src="<%= file.media_path %>" width="100%" height="600px"></iframe>
+    <% } else if (file.media_path.endsWith('.json')) { %>
+        <pre data-json-src="<%= file.media_path %>">Loading JSON...</pre>
+    <% } else if (file.media_path.endsWith('.svg')) { %>
+        <embed src="<%= file.media_path %>" type="image/svg+xml" width="100%" height="600px" />
     <% } else { %>
         <p>Unsupported file format: <%= file.media_path %></p>
     <% } %>
@@ -112,6 +116,7 @@
                                                                                 });
                                                                             });
                                                                         </script>
+<script src="../../public/fetch-json.js"></script>                                                                        
 </body>
 
 </html>

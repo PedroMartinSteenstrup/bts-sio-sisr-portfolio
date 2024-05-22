@@ -282,6 +282,6 @@ VALUES (
     );
 INSERT INTO realisations_docs (realisation_id, media_type, media_path)
 VALUES (
-    1, 'logo', 'logos/logo_linkedin.svg'
+    1, 'logo', 'logo_linkedin.svg'
 );
 COMMIT;

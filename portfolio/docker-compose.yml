@@ -50,6 +50,7 @@ services:
       - ${NGINX_PORT_HTTPS}:${NGINX_PORT_HTTPS}
     volumes:
       - ./nginx/certs:/etc/nginx/certs
+      - /var/log/nginx:/var/log/nginx
     depends_on:
       - web
     networks:
