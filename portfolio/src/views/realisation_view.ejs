@@ -24,10 +24,10 @@
         <ul class="ordering">
             Compétences:
             <li><span></span>
-                Mise en oeuvre 
+                Mise en oeuvre
             </li>
             <li><span></span>
-                Non mise en oeuvre 
+                Non mise en oeuvre
             </li>
         </ul>
         <% if (realisation.est_gestion_patrimoine) { %>
@@ -44,40 +44,74 @@
                                     <% } %>
                                         <p>Incidents, Assistance, Evolution</p>
                                 </div>
-                                <% if (realisation.est_presence_en_ligne) { %>
-                                    <div class="truebox">
-                                        <% } else { %>
-                                            <div class="falsebox">
-                                                <% } %>
-                                                    <p>Présence en ligne</p>
+    <% if (realisation.est_presence_en_ligne) { %>
+        <div class="truebox">
+            <% } else { %>
+                <div class="falsebox">
+                    <% } %>
+                        <p>Présence en ligne</p>
+                </div>
+                <% if (realisation.est_travail_mode_projet) { %>
+                    <div class="truebox">
+                        <% } else { %>
+                            <div class="falsebox">
+                                <% } %>
+                                    <p>Mode projet</p>
+                            </div>
+                            <% if (realisation.est_deploiement_service) { %>
+                                <div class="truebox">
+                                    <% } else { %>
+                                        <div class="falsebox">
+                                            <% } %>
+                                                <p>Mettre à disposition</p>
+                                        </div>
+                                        <% if (realisation.est_developpement_pro) { %>
+                                            <div class="truebox">
+                                                <% } else { %>
+                                                    <div class="falsebox">
+                                                        <% } %>
+                                                            <p>Développement pro</p>
+                                                    </div>
                                             </div>
-                                            <% if (realisation.est_travail_mode_projet) { %>
-                                                <div class="truebox">
-                                                    <% } else { %>
-                                                        <div class="falsebox">
-                                                            <% } %>
-                                                                <p>Mode projet</p>
-                                                        </div>
-                                                        <% if (realisation.est_deploiement_service) { %>
-                                                            <div class="truebox">
-                                                                <% } else { %>
-                                                                    <div class="falsebox">
-                                                                        <% } %>
-                                                                            <p>Mettre à disposition</p>
-                                                                    </div>
-                                                                    <% if (realisation.est_developpement_pro) { %>
-                                                                        <div class="truebox">
-                                                                            <% } else { %>
-                                                                                <div class="falsebox">
-                                                                                    <% } %>
-                                                                                        <p>Développement pro</p>
-                                                                                </div>
-                                                                        </div>
+<% if (files && files.length > 0) { %>    
+<div class="carousel">
+<% files.forEach(file => { %>
+<div class="carousel-item">
+<% if (file.media_path.endsWith('.jpg') || file.media_path.endsWith('.jpeg') || file.media_path.endsWith('.png') || file.media_path.endsWith('.gif')) { %>
+    <img src="<%= file.media_path %>" alt="Image for Realisation <%= realisation.realisation_id %>" style="width:100%">
+<% } else if (file.media_path.endsWith('.pdf')) { %>
+    <embed src="<%= file.media_path %>" type="application/pdf" width="100%" height="600px" />
+<% } else if (file.media_path.endsWith('.txt')) { %>
+    <iframe src="<%= file.media_path %>" width="100%" height="600px"></iframe>
+    <% } else { %>
+        <p>Unsupported file format: <%= file.media_path %></p>
+    <% } %>
+</div>
+<% }) %>
+</div>
+<% } else { %>
+<p>No files available for this realisation.</p>
+<% } %>
 
 
                                                                         <a href="/realisations"><button>Retour à la
                                                                                 liste des réalisations</button></a>
 
+                                                                        <script
+                                                                            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                                                        <script
+                                                                            src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+                                                                        <script>
+                                                                            $(document).ready(function () {
+                                                                                $('.carousel').slick({
+                                                                                    infinite: true,
+                                                                                    slidesToShow: 1,
+                                                                                    slidesToScroll: 1,
+                                                                                    autoplay: true,
+                                                                                    autoplaySpeed: 3000,
+                                                                                });
+                                                                            });
+                                                                        </script>
 </body>
 
 </html>

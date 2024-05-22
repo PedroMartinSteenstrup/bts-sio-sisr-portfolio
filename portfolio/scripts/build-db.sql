@@ -1,8 +1,8 @@
 -- autocommit is deactivated
-SET datestyle to SQL, DMY;
+SET datestyle to SQL,
+    DMY;
 BEGIN TRANSACTION;
 SET search_path TO public;
-
 CREATE TABLE IF NOT EXISTS settings (
     id SERIAL PRIMARY KEY,
     set_name TEXT NOT NULL,
@@ -28,7 +28,6 @@ VALUES (
         'Le Bloc 2 de compétences professionnelles option SISR « Administration des systèmes et des réseaux » vous permettra de construire les savoirs et savoir-faire liés à la conception, à l''installation et à l''administration d''une infrastructure réseau pour répondre aux besoins d''une organisation cliente. Il vous permettra également de consolider les techniques de résolution d''incidents liés aux composants réseaux, systèmes et services et de perfectionner les techniques de rédaction d''un compte rendu, d''une documentation, d''une procédure d''installation et de configuration.',
         '2 Année'
     );
-
 CREATE TABLE IF NOT EXISTS experiences (
     id SERIAL PRIMARY KEY,
     c_année_début TEXT NOT NULL,
@@ -37,7 +36,6 @@ CREATE TABLE IF NOT EXISTS experiences (
     c_titre TEXT NOT NULL,
     c_description TEXT NOT NULL
 );
-
 INSERT INTO experiences (
         c_année_début,
         c_année_fin,
@@ -66,7 +64,6 @@ VALUES (
         'Data Analyst',
         'Mise en place d''indicateurs de performance, de solutions de visualisation et de scripts d''extraction de données'
     );
-
 CREATE TABLE IF NOT EXISTS realisations (
     id SERIAL PRIMARY KEY,
     r_début DATE NOT NULL,
@@ -79,16 +76,15 @@ CREATE TABLE IF NOT EXISTS realisations (
     est_travail_mode_projet BOOLEAN,
     est_deploiement_service BOOLEAN,
     est_developpement_pro BOOLEAN,
-    realisations_docs_id INT
+    realisation_id INT UNIQUE
 );
-
 CREATE TABLE IF NOT EXISTS realisations_docs (
     id SERIAL PRIMARY KEY,
     realisation_id INT,
-    path VARCHAR(255),
-    FOREIGN KEY (realisation_id) REFERENCES realisations(realisations_docs_id)
+    media_type VARCHAR(15),
+    media_path VARCHAR(255),
+    FOREIGN KEY (realisation_id) REFERENCES realisations(realisation_id)
 );
-
 INSERT INTO realisations (
         r_début,
         r_fin,
@@ -100,7 +96,7 @@ INSERT INTO realisations (
         est_travail_mode_projet,
         est_deploiement_service,
         est_developpement_pro,
-        realisations_docs_id
+        realisation_id
     )
 VALUES (
         '05-03-2024',
@@ -284,5 +280,8 @@ VALUES (
         TRUE,
         14
     );
-
-    COMMIT;
+INSERT INTO realisations_docs (realisation_id, media_type, media_path)
+VALUES (
+    1, 'logo', 'logos/logo_linkedin.svg'
+);
+COMMIT;

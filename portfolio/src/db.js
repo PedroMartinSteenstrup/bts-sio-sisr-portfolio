@@ -30,7 +30,31 @@ const getData = async (sql_query, values) => {
     }
 };
 
+/**
+ * Inserts data into the specified table.
+ * @param {string} sql_query - The SQL query to execute.
+ * @param {Array} values - The values to insert.
+ * @returns {Promise<object>} - A promise that resolves with the result of the query.
+ */
+const insertData = async (sql_query, values) =>  {
+    try {
+        return await new Promise((resolve, reject) => {
+            pool.query(sql_query, values, (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    } catch (err) {
+        console.error('Error inserting data:', err);
+        throw err;
+    }
+};
+
 
 module.exports = {
     getData,
+    insertData
 };

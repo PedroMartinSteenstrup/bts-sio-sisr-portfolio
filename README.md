@@ -43,3 +43,28 @@ Si les données sont effacées, alors la commande suivante va les reproduire.
 ./.env
 PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_USER -p 5433 -f ./scripts/build-db.sql
 ```
+
+
+## Mettre CORS sur le bucket S3
+
+Les navigateurs bloquent les documents sinon
+
+```shell
+aws s3api put-bucket-cors --bucket portfolio-bts --profile ovh --endpoint-url=https://s3.rbx.io.cloud.ovh.net --cors-configuration=file://cors.json
+```
+
+avec `cors.json`
+```json
+{
+   "CORSRules": [
+        {
+            "AllowedHeaders": ["Content-Type", "Access-Control-Allow-Headers"],
+            "AllowedMethods": ["GET", "HEAD", "POST", "PUT", "DELETE"],
+            "AllowedOrigins": ["https://portfolio.fief.ovh"],
+            "ExposeHeaders": ["Access-Control-Allow-Origin"]
+        }
+   ]
+}
+
+
+```

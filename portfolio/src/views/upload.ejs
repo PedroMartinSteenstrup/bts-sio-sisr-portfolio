@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <h1>Téléverser un fichier</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="realisationId">Réalisation ID:</label>
+        <input type="text" id="realisationId" name="realisationId" required>
+        <br>
+        <label for="file">Choisir un fichier:</label>
+        <input id="file" name="file" type="file" />
+        <button type="submit">Téleverser</button>
+    </form>
+</body>
+</html>
