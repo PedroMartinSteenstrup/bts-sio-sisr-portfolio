@@ -29,7 +29,6 @@ portfolio/origin_ca.pem
 portfolio/origin_ca.key
 portfolio/nginx/certs/origin_ca.key
 portfolio/nginx/certs/origin_ca.pem
-portfolio/nginx/certs/default.cert
-portfolio/nginx/certs/default.key
+portfolio/nginx/certs/*
 portfolio/src/routes/uploads
 portfolio/src/routes/uploads/*

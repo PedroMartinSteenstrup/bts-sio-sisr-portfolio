@@ -2,15 +2,12 @@
 -------------- certaines dates étaient malformées, ou type US
 SET datestyle to SQL,
     DMY;
-
 -------------- tout faire dans une grand transaction
 BEGIN TRANSACTION;
 SET search_path TO public;
-
 ---------------------------------------------
 -------------- CREER LES TABLES -------------
 ---------------------------------------------
-
 CREATE TABLE IF NOT EXISTS settings (
     id SERIAL PRIMARY KEY,
     set_name TEXT NOT NULL,
@@ -31,7 +28,6 @@ CREATE TABLE IF NOT EXISTS experiences (
     c_titre TEXT NOT NULL,
     c_description TEXT NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS realisations (
     id SERIAL PRIMARY KEY,
     r_début DATE NOT NULL,
@@ -60,11 +56,23 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     m2p_hash text not null UNIQUE,
     cree_le TIMESTAMPTZ NOT NULL default now()
 );
-
+CREATE TABLE IF NOT EXISTS projets (
+    id SERIAL PRIMARY KEY,
+    p_intitule TEXT NOT NULL,
+    p_description TEXT NOT NULL,
+    projet_id TEXT UNIQUE
+);
+CREATE TABLE IF NOT EXISTS projets_docs (
+    id SERIAL PRIMARY KEY,
+    projet_id TEXT,
+    media_type VARCHAR(15),
+    media_path VARCHAR(255),
+    media_key VARCHAR(100),
+    FOREIGN KEY (projet_id) REFERENCES projets(projet_id)
+);
 -----------------------------------------------
 ------------- INSERTS CI-DESSOUS --------------
 -----------------------------------------------
-
 INSERT INTO courses (c_bloc, c_titre, c_description, c_année)
 VALUES (
         'Bloc 1',
@@ -77,8 +85,37 @@ VALUES (
         'Administration des systèmes et des réseaux',
         'Le Bloc 2 de compétences professionnelles option SISR « Administration des systèmes et des réseaux » vous permettra de construire les savoirs et savoir-faire liés à la conception, à l''installation et à l''administration d''une infrastructure réseau pour répondre aux besoins d''une organisation cliente. Il vous permettra également de consolider les techniques de résolution d''incidents liés aux composants réseaux, systèmes et services et de perfectionner les techniques de rédaction d''un compte rendu, d''une documentation, d''une procédure d''installation et de configuration.',
         '2 Année'
+    ),
+    (
+        'Bloc 3',
+        'Cybersécurité des services informatiques',
+        'Le Bloc 3 de compétences professionnelles « Cybersécurité des services informatiques » vous permettra d''acquérir les compétences nécessaires pour répondre aux besoins de sécurité des services informatiques d''une organisation notamment au regard du développement des menaces et attaques en provenance d''internet et des risques liés aux usages numériques.',
+        '2 Année'
+    ),
+    (
+        'Bloc 4',
+        'Culture générale et expression',
+        '',
+        '2 Année'
+    ),
+    (
+        'Bloc 5',
+        'Expression et communication en langue anglaise',
+        'Le niveau B2 du CECR est attendu à l''épreuve d''anglais',
+        '2 Année'
+    ),
+    (
+        'Bloc 6',
+        'Mathématiques pour l''informatique',
+        'Le Bloc 6 « Mathématiques pour l''informatique » vise à acquérir les bases mathématiques nécessaires à la compréhension et la maitrise des finalités spécifiques du BTS SIO et des démarches mathématiques permettant d''en appréhender la pertinence et l''efficacité pour évoluer dans un environnement numérique.',
+        '2 Année'
+    ),
+    (
+        'Bloc 7',
+        'Culture économique, juridique et managériale pour l''informatique',
+        'Au fil des années l''environnement des entreprises s''est complexifié. Vous serez amené à évoluer au sein d''une organisation possédant ses propres logiques de fonctionnement. Il devient opportun de vous préparer à œuvrer dans cet environnement en vous proposant de lier les trois disciplines, économie, droit et management dans ce parcours de Culture économique juridique et managériale pour l''informatique.',
+        '2 Année'
     );
-
 INSERT INTO experiences (
         c_année_début,
         c_année_fin,
@@ -89,25 +126,52 @@ INSERT INTO experiences (
 VALUES (
         '2023',
         'présent',
-        'HomeToGo',
-        'Senior Data Platform Engineer',
+        'HomeToGo (Berlin)',
+        'Data Platform Engineer',
         'Je développe et maintiens des applications métiers pour l''équipe Données et l''entreprise en général'
     ),
     (
         '2020',
         '2022',
-        'Wise, HomeToGo',
+        'Wise (Londres), HomeToGo (Berlin)',
         'Analytics Engineer',
-        'Gestion de la base de données'
+        'Gestion de la base de données analytique et du corpus de script'
     ),
     (
         '2017',
         '2020',
-        'TransferWise',
+        'TransferWise (Tallinn, Londres)',
         'Data Analyst',
         'Mise en place d''indicateurs de performance, de solutions de visualisation et de scripts d''extraction de données'
+    ),
+    (
+        '2016',
+        '2017',
+        'TransferWise (Tallinn)',
+        'Support Client',
+        'Répondre aux requêtes des clients francophones par email, téléphone et chat.'
+    ),
+    (
+        '2015',
+        '2016',
+        'Conseil Départemental 62 (Arras)',
+        'Gestionnaire de projets',
+        'Suivi administratif de projets de coopération transfrontalière.'
+    ),
+    (
+        '2013',
+        '2014',
+        'Haché (Copenhague)',
+        'Cuisinier',
+        'Préparation de Burgers gourmets.'
+    ),
+    (
+        '2013',
+        '2013',
+        'North Sea Region Programme (Viborg)',
+        'Stagiaire',
+        'Réflexion et consultation sur les indicateurs de performance.'
     );
-
 INSERT INTO realisations (
         r_début,
         r_fin,
@@ -303,8 +367,15 @@ VALUES (
         TRUE,
         14
     );
--- INSERT INTO realisations_docs (realisation_id, media_type, media_path)
--- VALUES (
---     1, 'logo', 'logo_linkedin.svg', 'logo_linkedin.svg'
--- );
+INSERT INTO projets (p_intitule, p_description, projet_id)
+VALUES (
+        'Recensement des réseaux sur le compte AWS principal et ses sous-comptes',
+        'Les attentes de l''équipe qui m''a proposé ce travail sont (1) de leur procurer un document support sur lesquels baser les discussions, et (2) des pistes pour un meilleur addressage des ressources internes.',
+        'E5pro'
+    ),
+    (
+        'Mise en place d''une infrastructure type pour un espace de co-working avec pépinière d''entreprise',
+        'Les missions poposées sont de (1) mettre en place l''infrastructure du site du client, (2) évolution de l''architecture système pour l''accueil d''un nouveau client et (3) sécurisation et mise en place de la tolérance de pannes des équipements réseaux',
+        'E5perso'
+    );
 COMMIT;

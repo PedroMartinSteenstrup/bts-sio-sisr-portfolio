@@ -1,17 +1,38 @@
 <!doctype html>
 <html>
 <head>
-<!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"> -->
-<title>The Main Home Page</title>
-<%- include('styles'); %>
+    <%- include('partials/head'); %>
 </head>
+<header>
+    <%- include('partials/header'); %>
+</header>
 <body>
-<h1> This is the Main Home Page </h1>
-<a href="/list-courses">Descriptif du BTS SIO SISR</a>
-<br>
-<a href="/experiences">Portfolio</a>
-<br>
-<a href="/realisations">Realisations</a>
-</p>
+    <div class="link-row">
+        <div class="image-container">
+            <a href="/list-courses">
+                <img src="/assets/logo-btssiosisr.png" alt="Descriptif du BTS SIO SISR">
+            </a>
+        </div>
+
+    </div>
+    <div class="link-row">
+        <div class="image-container">
+            <a href="/experiences">
+                <img src="/assets/logo-portfolio.png" alt="Portfolio">
+            </a>
+        </div>
+
+    </div>
+    <div class="link-row">
+        <div class="image-container">
+            <a href="/realisations">
+                <img src="/assets/logo-realisations.png" alt="Réalisations">
+            </a>
+        </div>
+
+    </div>
 </body>
+<footer>
+    <%- include('partials/footer'); %>
+  </footer>
 </html>

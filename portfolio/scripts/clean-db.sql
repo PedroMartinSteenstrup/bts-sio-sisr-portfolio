@@ -7,5 +7,6 @@ TRUNCATE table courses;
 TRUNCATE table experiences;
 TRUNCATE table realisations CASCADE;
 TRUNCATE table realisations_docs;
-
+TRUNCATE table projets CASCADE;
+TRUNCATE table projets_docs;
 COMMIT;

@@ -1,25 +1,41 @@
 <!doctype html>
 <html>
 <head>
-    <%- include('styles'); %>
-<title>The Main Courses Page</title>
+<link rel="stylesheet" href="/assets/styles.css" type="text/css">
+    <%- include('partials/head'); %>
 </head>
+<header>
+    <%- include('partials/header'); %>
+</header>
 <body>
-<h1> This is the Main Courses Page </h1>
-<!-- <a href="/author-home">Author Home Page</a> -->
+<h1>Le BTS Services Informatiques aux Organisations (SIO)</h1>
+<h2>Spécialité Solutions d'Infrastructure, Systèmes et Réseaux (SISR)</h2>
 <br>
-<h3>List of courses</h3>
+<div>
+<p>
+Le BTS option SISR permet d'acquérir des compétences dans 3 domaines d'activités :
+<br><br>
+- En <b>support et mise à disposition de services informatiques</b> : l'étudiant se forme pour répondre aux attentes des utilisateurs en assurant la disponibilité des services informatiques existants. Il  apprend à prendre en compte les besoins informatiques à accompagner la transformation numérique des services informatiques, tout en maintenant son employabilité. Il acquiert ainsi des compétences pour gérer le patrimoine informatique, répondre aux incidents, développer la présence de l'entreprise sur le Web.
+<br><br>
+- En <b>cybersécurité des services informatiques</b> : l'étudiant est formé à la cybersécurisation d'une infrastructure réseau, d'un système ou d'un service et à l'analyse des risques encourus par les entreprises en tenant compte des dimensions techniques, organisationnelles ou encore juridiques. Il acquiert des compétences sur la protection des données et l'identité numérique de l'entreprise, la sécurisation des équipements et des usages des utilisateurs. 
+<br><br>
+- En <b>administration des systèmes et des réseaux</b> : l'étudiant est formé à l'administration des systèmes et du réseau. Il acquiert  les compétences pour modifier ou adapter les solutions d'infrastructure de réseau : concevoir une solution d'infrastructure réseau, l'installer, la tester et la déployer tout en assurant la qualité de service des équipements du réseau. L'étudiant apprend aussi à administrer et superviser ce réseau.
+<br> <br>
+Sous statut scolaire, l'élève est en stage pendant 10 semaines réparties sur les 2 années de formation.
+</p>
+En savoir plus sur le <a href="https://www.onisep.fr/ressources/univers-formation/formations/post-bac/bts-services-informatiques-aux-organisations-option-a-solutions-d-infrastructure-systemes-et-reseaux#objectifs-formation"
+style="display: inline;" target="_blank"> site de l'ONISEP</a>
+</div>
+<h3>Liste des unités dispensées par le CNED</h3>
 <div style="overflow-x: auto;">
 <table>
     <tr>
-        <th>#ID</th>
         <th>Bloc</th>
         <th>Titre</th>
         <th>Description</th>
     </tr>
     <% for(var i=0; i < courses.length; i++) { %>
             <tr>
-                <td><%= (i+1) %></td>
                 <td><%= courses[i].c_bloc %></td>
                 <td><%= courses[i].c_titre %></td>
                 <td><%= courses[i].c_description %></td>
@@ -28,7 +44,9 @@
     <% } %>
 </table>
 </div>
-<!-- <a href="/reader-home">Reader Home Page</a> -->
 </p>
 </body>
+<footer>
+    <%- include('partials/footer'); %>
+  </footer>
 </html>

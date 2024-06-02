@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head'); %>
+</head>
+<header>
+  <%- include('partials/header'); %>
+</header>
+
+<body>
+<p>
+Ce portfolio est réalisé dans le cadre du BTS SIO SISR comme support aux examens des épreuves E4 et E5.
+<br>
+Cela aura été l'occasion d'approfondir mes connaissances dans la gestion des systèmes informatiques, et de découvrir les enjeux de la gestion des réseaux aux sein des entreprises.
+</p>
+Ce site est réalisé avec le soucis d'un minimum de dépendances afin d'en accroître l'intérêt dans le cadre de l'apprentissage, et de minimiser des failles de sécurité potentielles.
+<div class="content">
+  <p>Extrait du package.json</p>
+  <div class="code-container">
+<pre><code>
+  "dependencies": {
+    "aws-sdk": "^2.1625.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.0",
+    "express-validator": "^7.0.1",
+    "pg": "^8.11.5",
+    "serve-favicon": "^2.5.0"
+  },
+</code></pre>
+</div>
+</div>
+<div>
+<p>
+  Le site nécessite la présence:
+  <ul>
+  <li> de node version 20 </li>
+  <li> de postgres version 16.2</li>
+  <li> de nginx version 1.25.5</li>
+</ul>
+Ils sont containeurisée sur debian bookworm-slim.
+</p>
+L'ensemble du code est disponible <a target="_blank" href="https://github.com/PedroMartinSteenstrup/bts-sio-sisr-portfolio" style="display:inline">sur ce lien github</a>.
+</div>
+</body>
+
+<footer>
+  <br><br><br>
+  <%- include('partials/footer'); %>
+</footer>
+
+</html>

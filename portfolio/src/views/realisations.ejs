@@ -1,12 +1,15 @@
 <!doctype html>
 <html>
 <head>
-<title>The Main Realisations Page</title>
-<%- include('styles'); %>
+    <title>Réalisations dans le cadre du BTS</title>
+    <%- include('partials/head'); %>
 </head>
+<header>
+    <%- include('partials/header'); %>
+</header>
 <body>
 <h1> Liste des réalisations </h1>
-<a href="/">Accueil</a>
+<a href="/">Retour à l'accueil</a>
 <br>
 <table>
     <tr>
@@ -14,7 +17,7 @@
         <th>Période</th>
         <th>Titre</th>
         <th>Mots-Clés</th>
-        <th>Action</th>
+        <th>Description</th>
     </tr>
     <% for(var i=0; i < realisations.length; i++) { %>
         <% start_date = realisations[i].r_début.toLocaleDateString('fr-FR') %>
@@ -30,4 +33,7 @@
 </table>
 <!-- <a href="/reader-home">Reader Home Page</a> -->
 </body>
+<footer>
+    <%- include('partials/footer'); %>
+  </footer>
 </html>

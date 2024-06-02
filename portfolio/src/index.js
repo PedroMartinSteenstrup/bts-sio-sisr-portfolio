@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); // set the app to use ejs for rendering
-app.use("/public", express.static('../public'));  // set location of static files
+app.use(express.static('../public'));  // set location of static files
 app.use(favicon(path.join(__dirname,'..', 'public','favicon.ico')));
 
 app.locals.title = "Portfolio de Pedro";

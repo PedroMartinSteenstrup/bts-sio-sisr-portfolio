@@ -8,13 +8,13 @@ const getData = require("../utils_db").getData;
 router.get("/list-courses", (req, res, next) => {
     // Define the query
     SQLquery = "SELECT * FROM courses;"
-    console.log(SQLquery)
-
     getData(SQLquery)
         .then((data) => {
-            console.log(data)
             res.render('courses.ejs',
-                { courses: data, title: req.app.locals.title });
+                {
+                    courses: data,
+                    title: req.app.locals.title
+                });
         });
 });
 
