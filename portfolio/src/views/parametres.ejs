@@ -10,6 +10,14 @@
 </header>
 
 <body>
+    <main class="main-content">
+        <p>Bienvenue, <%= user %>!</p>
+        <p>Vous êtes connecté(e) jusqu'à <%= exp.getHours() +`h`+ exp.getMinutes() %>.</p>
+        <p>Cela vous donne accès à</p>
+        <ul>
+            <li><a href="/upload">La possibilité de téléverser des fichiers</a></li>
+            <li><a href="/test" target="_blank">Accès à la page de tests</a></li>
+        </ul>
     <p>
     <% if (user) { %>
           <form action="/logout" method="POST" style="display:inline;">
@@ -21,8 +29,10 @@
     </p>
 <br>
 <p>
-    <a href="/test" target="_blank">Open the test page</a>
+    
 </p>
+
+</main>
 </body>
 <footer>
     <%- include('partials/footer'); %>

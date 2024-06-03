@@ -2,11 +2,21 @@
     box-sizing: border-box;
 }
 
+/* Ensure the html and body take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f8f8;
     padding: 20px;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 h1 {
@@ -181,15 +191,39 @@ ul.ordering li:nth-child(2) span {
     opacity: 1;
 }
 
-.carousel {
-    width: 80%;
-    margin: 20px auto;
+.media-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
 }
 
-.carousel-item {
+.media-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.media-item {
+    width: 300px; /* Adjust as needed */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.media-item img,
+.media-item iframe,
+.media-item embed {
+    width: 100%;
+    height: auto;
+}
+
+.text-center {
     text-align: center;
 }
 
+/* Pour la page d'accueil */
 .link-row {
     display: flex;
     align-items: center;
@@ -229,6 +263,7 @@ ul.ordering li:nth-child(2) span {
     border-radius: 5px;
 }
 
+/* Used in the front page to center */
 .image-container {
     flex: 1;
     /* Each image container takes up an equal amount of space */
@@ -245,6 +280,14 @@ ul.ordering li:nth-child(2) span {
     /* Ensures the image doesn't exceed its container */
     height: auto;
     /* Maintains the original aspect ratio */
+}
+
+.pdf {
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 @media (max-width: 600px) {
@@ -279,6 +322,7 @@ ul.ordering li:nth-child(2) span {
     .link-row {
         flex-direction: column;
         align-items: flex-start;
+        background-color: #0a0909;
     }
 
     .link-row img {
@@ -348,21 +392,10 @@ ul.ordering li:nth-child(2) span {
     text-decoration: underline; /* Add underline on hover */
 }
 
-.content {
-    padding: 20px;
-}
-
-.code-container {
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 20px 0;
-    overflow-x: auto;
-}
-
-.code-container pre {
-    margin: 0;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
+/* Footer styling */
+.footer {
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }

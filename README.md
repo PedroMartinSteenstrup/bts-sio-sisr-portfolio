@@ -50,6 +50,9 @@ PGPASSWORD=$POSTGRES_PASSWORD psql -e -h localhost -d $POSTGRES_DB -U $POSTGRES_
 Les navigateurs bloquent les documents sinon
 
 ```shell
+# tout d'abord afficher la situation initiale
+aws s3api --profile ovh get-bucket-cors --bucket portfolio-bts
+
 aws s3api put-bucket-acl --bucket portfolio-bts --profile ovh --endpoint-url=https://s3.rbx.io.cloud.ovh.net --acl public-read
 
 aws s3api put-bucket-cors --bucket portfolio-bts --profile ovh --endpoint-url=https://s3.rbx.io.cloud.ovh.net --cors-configuration=file://cors.json

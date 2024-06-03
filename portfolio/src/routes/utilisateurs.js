@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
 // Route to render login page
 router.get('/login', (req, res) => {
     if (res.locals.user) {
-        return res.redirect('/');
+        return res.redirect('/settings');
       }
     res.render('login');
 });

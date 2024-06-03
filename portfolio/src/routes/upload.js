@@ -19,6 +19,8 @@ router.get('/upload', authenticateJWT, (req, res) => {
 router.post('/upload', async (req, res) => {
     try {
         const realisationId = req.body.realisationId;
+        const docType = req.body.doctype;
+        const mediaType = req.body.mediatype;
         const file = req.files.file; // Access the uploaded file
 
         // Define the path to save the uploaded file temporarily
@@ -33,7 +35,7 @@ router.post('/upload', async (req, res) => {
             const bucketName = 'portfolio-bts'; // Replace with your actual bucket name
 
             try {
-                await uploadFileAndSavePath(realisationId, uploadPath, bucketName);
+                await uploadFileAndSavePath(realisationId, docType, mediaType, uploadPath, bucketName);
                 res.send('File uploaded and path saved successfully');
             } catch (error) {
                 console.error('Error during file upload and save path:', error);

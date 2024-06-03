@@ -3,84 +3,65 @@
 
 <head>
     <%- include('partials/head'); %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<header>
-    <%- include('partials/header'); %>
-</header>
+
 <body>
-    <h1>
-        <%= title %>
-    </h1>
-    <a href="/">Accueil</a>
-    <br>
-    <h3>
-        <%= projet.p_intitule %>
-    </h3>
-    <p> </p>
-    <p>
-        Concepts clés: <%= projet.p_description %>
-    </p>
+    <header>
+        <%- include('partials/header'); %>
+    </header>
+    <div class="container">
 
-         <% if (files && files.length > 0) { %>
-            <div class="carousel">
-                <% files.forEach(file => { %>
-                    <div class="carousel-item">
-                        <% if (file.media_path.endsWith('.jpg') || file.media_path.endsWith('.jpeg') || file.media_path.endsWith('.png') || file.media_path.endsWith('.gif')) { %>
-                            <!-- Image -->
-                            <img src="<%= file.url %>" alt="Image for Realisation <%= realisation.realisation_id %>" style="max-width: 100%; height: auto;">
-                        <% } else if (file.media_path.endsWith('.pdf')) { %>
-                            <!-- PDF -->
-                            <a href="<%= file.url %>" target="_blank">View PDF</a>
-                        <% } else if (file.media_path.endsWith('.txt')) { %>
-                            <!-- Text File -->
-                            <a href="<%= file.url %>" target="_blank">View Text File</a>
-                        <% } else if (file.media_path.endsWith('.json')) { %>
-                            <!-- JSON -->
-                            <a href="<%= file.url %>" target="_blank">View JSON</a>
-                        <% } else if (file.media_path.endsWith('.svg')) { %>
-                            <!-- SVG -->
-                            <embed src="<%= file.url %>" type="image/svg+xml" style="max-width: 100%; height: auto;">
-                        <% } else { %>
-                            <p>Unsupported file format: <%= file.media_path %></p>
-                        <% } %>
-                    </div>
-                <% }) %>
+        <div class="content">
+            <br>
+            <h3 class="text-center"><%= projet.p_intitule %></h3>
+            <p class="text-center">Concepts clés: <%= projet.p_description %></p>
+
+            <% if (files && files.length > 0) { %>
+                <div>
+                    <% files.forEach(file => { %>
+                        <div>
+                            <% if (file.media_path.endsWith('.jpg') || file.media_path.endsWith('.jpeg') || file.media_path.endsWith('.png') || file.media_path.endsWith('.gif')) { %>
+                                <!-- Image -->
+                                <img src="<%= file.url %>" alt="Image for Realisation <%= realisation.realisation_id %>">
+                            <% } else if (file.media_path.endsWith('.pdf')) { %>
+                                <!-- PDF -->
+                                <object class="pdf" data="<%= file.url %>" width="800">
+                        </object>
+                                <!-- <iframe src="<%= file.url %>" style="width: 100%; height: 600px;" frameborder="0"></iframe> -->
+                            <% } else { %>
+                                <p>Fichier de format non pris en compte: <%= file.media_path %></p>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="text-center">Aucun fichier disponible pour cette réalisation.</p>
+            <% } %>
+
+            <div class="text-center">
+                <a href="/experiences"><button>Retour au sommaire</button></a>
             </div>
-        <% } else { %>
-            <p>No files available for this realisation.</p>
-        <% } %>
+        </div>
 
-<a href="/experiences"><button>Retour au sommaire</button></a>
+    </div>
 
-<script nonce="<%= nonce %>"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script nonce="<%= nonce %>"
-    src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script nonce="<%= nonce %>">
-    $(document).ready(function () {
-        $('.carousel').slick({
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 3000,
-        });
-    });
-</script>
 <script nonce="<%= nonce %>">
     document.addEventListener('DOMContentLoaded', function() {
         const jsonElement = document.getElementById('json-data');
-        const jsonSrc = jsonElement.getAttribute('data-json-src');
-        fetch(jsonSrc)
-            .then(response => response.json())
-            .then(data => {
-                jsonElement.textContent = JSON.stringify(data, null, 2);
-            })
-            .catch(error => console.error('Error fetching JSON:', error));
+        if (jsonElement) {
+            const jsonSrc = jsonElement.getAttribute('data-json-src');
+            fetch(jsonSrc)
+                .then(response => response.json())
+                .then(data => {
+                    jsonElement.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching JSON:', error));
+        }
     });
 </script>
-</body>
 <footer>
     <%- include('partials/footer'); %>
-  </footer>
+</footer>
+</body>
 </html>

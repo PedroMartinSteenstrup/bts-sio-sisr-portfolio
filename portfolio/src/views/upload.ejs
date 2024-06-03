@@ -11,12 +11,27 @@
 
 <body>
     <h1>Téléverser un fichier</h1>
+    <p>Afin de pouvoir relier le fichier à sa réalisation, veuillez insérer l'identifiant unique de réalisation.</p>
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="realisationId">Réalisation ID:</label>
+        <label for="realisationId">Identifiant unique de réalisation:</label>
         <input type="text" id="realisationId" name="realisationId" required>
-        <br>
+        <br><br>
+        <label for="doctype">Projet ou Réalisation</label>
+        <select id="doctype" name="doctype" required>
+            <option value="projet">Projet</option>
+            <option value="realisation">Réalisation</option>
+        </select>
+        <br><br>
+        <label for="mediatype">Type de support média</label>
+        <select id="mediatype" name="mediatype" required>
+            <option value="picture">Image</option>
+            <option value="doc">Document</option>
+            <option value="other">Autre</option>
+        </select>
+        <br><br>
         <label for="file">Choisir un fichier:</label>
         <input id="file" name="file" type="file" />
+        <br><br>
         <button type="submit">Téleverser</button>
     </form>
 </body>

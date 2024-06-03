@@ -1,43 +1,55 @@
 <!doctype html>
 <html>
+
 <head>
     <%- include('partials/head'); %>
 </head>
-<header>
-    <%- include('partials/header'); %>
-</header>
-<body>
-<h1> Expérience professionelle </h1>
 
-<h3>Curriculum</h3>
-<table>
-    <tr>
-        <th>#ID</th>
-        <th>Période</th>
-        <th>Titre</th>
-        <th>Description</th>
-    </tr>
-    <% for(var i=0; i < experiences.length; i++) { %>
-            <tr>
-                <td><%= (i+1) %></td>
-                <td><%= experiences[i].c_année_début +`-`+ experiences[i].c_année_fin %></td>
-                <td><%= experiences[i].c_titre +` @`+ experiences[i].c_employeur %></td>
-                <td><%= experiences[i].c_description %></td>
+<body>
+    <header>
+        <%- include('partials/header'); %>
+    </header>
+    <h1> Expérience professionelle </h1>
+
+    <h3>Curriculum</h3>
+    <table>
+        <tr>
+            <th>#ID</th>
+            <th>Période</th>
+            <th>Titre</th>
+            <th>Description</th>
         </tr>
+        <% for(var i=0; i < experiences.length; i++) { %>
+            <tr>
+                <td>
+                    <%= (i+1) %>
+                </td>
+                <td>
+                    <%= experiences[i].c_année_début +`-`+ experiences[i].c_année_fin %>
+                </td>
+                <td>
+                    <%= experiences[i].c_titre +` @`+ experiences[i].c_employeur %>
+                </td>
+                <td>
+                    <%= experiences[i].c_description %>
+                </td>
             </tr>
-    <% } %>
-</table>
-<p>
-Voir aussi mon <a href="https://www.linkedin.com/in/pedro-martin-steenstrup/" style="display: inline;" target="_blank">profil LinkedIn</a>
-</p>
-<h1> Réalisations professionelles </h1>
-<h3>Épreuve E5 - Administration des systèmes et des réseaux (option SISR)</h3>
-<div >
-<a href="/E5/projet-pro" class="box">E5 Projet Pro</a>
-<a href="/E5/projet-perso" class="box">E5 Projet Personnel</a>
-</div>
+            </tr>
+            <% } %>
+    </table>
+    <p>
+        Voir aussi mon <a href="https://www.linkedin.com/in/pedro-martin-steenstrup/" style="display: inline;"
+            target="_blank">profil LinkedIn</a>
+    </p>
+    <h1> Réalisations professionelles </h1>
+    <h3>Épreuve E5 - Administration des systèmes et des réseaux (option SISR)</h3>
+    <div>
+        <a href="/E5/projet-pro" class="box">E5 Projet Pro</a>
+        <a href="/E5/projet-perso" class="box">E5 Projet Personnel</a>
+    </div>
+    <footer>
+        <%- include('partials/footer'); %>
+    </footer>
 </body>
-<footer>
-    <%- include('partials/footer'); %>
-  </footer>
+
 </html>

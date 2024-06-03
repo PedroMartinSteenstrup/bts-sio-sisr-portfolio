@@ -9,7 +9,7 @@ const s3 = new AWS.S3({
     region: 'rbx'
 });
 
-async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
+async function uploadFileAndSavePath(realisationId, docType, mediaType, filePath, bucketName) {
     const fileName = require('path').basename(filePath);
     const fs = require('fs');
     const re = new RegExp('https:\/\/portfolio-bts\.s3\.rbx\.io\.cloud\.ovh\.net\/([a-zA-Z.]*)')
@@ -18,9 +18,10 @@ async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
     const fileContent = fs.readFileSync(filePath);
 
     // Upload the file to OVH Object Storage
+    console.log("Will log as "+`${docType}/${realisationId}/${mediaType}/${fileName}`);
     const params = {
         Bucket: bucketName,
-        Key: fileName,
+        Key: `${docType}/${realisationId}/${mediaType}/${fileName}`,
         Body: fileContent
     };
 
@@ -28,9 +29,14 @@ async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
         const uploadResult = await s3.upload(params).promise();
         const fileUrl = uploadResult.Location;
         const filekey = uploadResult.Key;
-        const mediaType = "logo";
+        let sqlQuery = "";
 
-        const sqlQuery = 'INSERT INTO realisations_docs (realisation_id, media_type, media_path, media_key) VALUES ($1, $2, $3, $4) RETURNING realisation_id';
+        if (docType === 'projet') {
+            sqlQuery = 'INSERT INTO projets_docs (projet_id, media_type, media_path, media_key) VALUES ($1, $2, $3, $4) RETURNING projet_id';
+        } else if (docType === 'realisation') {
+            sqlQuery = 'INSERT INTO realisations_docs (realisation_id, media_type, media_path, media_key) VALUES ($1, $2, $3, $4) RETURNING realisation_id';
+        }
+        
         const values = [realisationId, mediaType, fileUrl, filekey]
         // Save the file path in the database
         const result = await insertData(sqlQuery, values)
@@ -47,10 +53,11 @@ async function uploadFileAndSavePath(realisationId, filePath, bucketName) {
         throw error;
     }
 }
-async function listFilesInBucket(bucketName, realisationId) {
+
+async function listFilesInBucket(bucketName, docType, realisationId) {
     const params = {
         Bucket: bucketName,
-        // Prefix: `${realisationId}/` // Assuming files are stored in folders named by realisationId
+        Prefix: `${docType}/${realisationId}` // Assuming files are stored in folders named by realisationId
     };
 
     try {
@@ -69,8 +76,22 @@ async function listFilesInBucket(bucketName, realisationId) {
     }
 };
 
+async function getFileContent(bucketName, key) {
+    try {
+        const params = {
+            Bucket: bucketName,
+            Key: key
+        };
+        const data = await s3.getObject(params).promise();
+        return data.Body.toString('utf-8'); // Assuming the file is text-based
+    } catch (error) {
+        console.error(`Error fetching file content for ${key}:`, error);
+        throw error;
+    }
+}
 
 module.exports = {
     uploadFileAndSavePath,
-    listFilesInBucket
+    listFilesInBucket,
+    getFileContent
 };

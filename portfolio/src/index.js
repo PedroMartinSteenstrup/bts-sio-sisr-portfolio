@@ -38,6 +38,7 @@ app.use((req, res, next) => {
     script-src 'self' 'nonce-${res.locals.nonce}';
     style-src 'self' 'unsafe-inline';
     font-src 'self';
+    frame-src 'self' data: https://portfolio-bts.s3.rbx.io.cloud.ovh.net/;
     object-src 'self' https://portfolio-bts.s3.rbx.io.cloud.ovh.net/;
   `;
   res.setHeader("Content-Security-Policy", csp.replace(/\s{2,}/g, ' ').trim());

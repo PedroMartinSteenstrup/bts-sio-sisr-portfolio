@@ -30,19 +30,19 @@ router.get("/realisations", (req, res, next) => {
  * @desc Voir le détail d'une réalisation
  */
 router.get("/realisation/:id", (req, res, next) => {
-    var id = req.params.id;
     let bucketName = "portfolio-bts";
-    // Define the query
-    SQLquery = `SELECT * FROM realisations WHERE id = $1::int;`
-    getData(SQLquery, [id])
+    // Define the query to obtain the realisation_id from the database
+    getData(`SELECT * FROM realisations WHERE id = $1::int;`, [req.params.id])
         .then((data) => {
+            // probably should do some validation here that the id is valid
+            let realisation_id = data[0].realisation_id;
             try {
                 const getDocsQuery = 'SELECT * FROM realisations_docs WHERE realisation_id = $1::int';
-                getData(getDocsQuery, [id])
+                getData(getDocsQuery, [realisation_id])
                     .then(async (dbFiles) => {
                         console.log(`dbFiles: =====>`);
                         console.log(dbFiles);
-                        const s3Files = await listFilesInBucket(bucketName, id);
+                        const s3Files = await listFilesInBucket(bucketName, 'realisation', realisation_id);
                         console.log(`s3Files: =====>`);
                         console.log(s3Files);
                         // on match les entrées db avec les clé sur s3

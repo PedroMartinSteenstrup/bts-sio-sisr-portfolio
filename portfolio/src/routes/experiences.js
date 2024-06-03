@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const getData = require("../utils_db").getData;
-const { uploadFileAndSavePath, listFilesInBucket } = require('../utils_s3');
+const { getData } = require("../utils_db");
+const { getFileContent, listFilesInBucket } = require('../utils_s3');
 const { authenticateJWT } = require("./utilisateurs");
 
 /**
@@ -37,7 +37,7 @@ router.get("/E5/projet-perso", (req, res, next) => {
                     .then(async (dbFiles) => {
                         console.log(`dbFiles: =====>`);
                         console.log(dbFiles);
-                        const s3Files = await listFilesInBucket(bucketName, id);
+                        const s3Files = await listFilesInBucket(bucketName, 'projet', id);
                         console.log(`s3Files: =====>`);
                         console.log(s3Files);
                         // on match les entrées db avec les clé sur s3
@@ -45,8 +45,8 @@ router.get("/E5/projet-perso", (req, res, next) => {
                             const s3File = s3Files.find(s3File => s3File.key.includes(dbFile.media_key));
                             return s3File ? { ...dbFile, url: s3File.url } : dbFile;
                         });
-                        console.log(files);
-                        console.log(projet_data[0]);
+                        console.log('files' + files);
+                        console.log('projet_data:' + projet_data[0]);
                         res.render('projet_view.ejs',
                             {
                                 projet: projet_data[0],
@@ -70,46 +70,54 @@ router.get("/E5/projet-perso", (req, res, next) => {
 /**
  * @desc Voir le détail du projet professionel
  */
-router.get("/E5/projet-pro", authenticateJWT, (req, res, next) => {
-    var id = 'E5pro';
-    let bucketName = "portfolio-bts";
-    let title = "Portfolio - E5 pro"
+router.get("/E5/projet-pro", authenticateJWT, async (req, res, next) => {
+    const id = 'E5pro';
+    const bucketName = "portfolio-bts";
+    const title = "Portfolio - E5 pro"
 
-    // Define the query
-    getData(`SELECT * FROM projets WHERE projet_id = $1;`, [id])
-        .then((projet_data) => {
-            try {
-                getData('SELECT * FROM projets_docs WHERE projet_id = $1;', [id])
-                    .then(async (dbFiles) => {
-                        console.log(`dbFiles: =====>`);
-                        console.log(dbFiles);
-                        const s3Files = await listFilesInBucket(bucketName, id);
-                        console.log(`s3Files: =====>`);
-                        console.log(s3Files);
-                        // on match les entrées db avec les clé sur s3
-                        const files = dbFiles.map(dbFile => {
-                            const s3File = s3Files.find(s3File => s3File.key.includes(dbFile.media_key));
-                            return s3File ? { ...dbFile, url: s3File.url } : dbFile;
-                        });
-                        console.log(files);
-                        res.render('projet_view.ejs',
-                            {
-                                projet: projet_data[0],
-                                title: title,
-                                files: files,
-                                nonce: res.locals.nonce, // Pass nonce to template
-                            });
-                    });
-            } catch (error) {
-                console.error('Error fetching files:', error);
-                res.render('projet_view.ejs',
-                    {
-                        projet: projet_data[0],
-                        title: title,
-                        nonce: res.locals.nonce, // Pass nonce to template
-                    });
+    try {
+        // Fetch project data
+        const projet_data = await getData(`SELECT * FROM projets WHERE projet_id = $1;`, [id]);
+
+        if (projet_data.length === 0) {
+            res.status(404).send("Project not found");
+            return;
+        }
+        const dbFiles = await getData('SELECT * FROM projets_docs WHERE projet_id = $1;', [id]);
+        console.log(`dbFiles: =====>`);
+        console.log(dbFiles);
+
+        // Fetch files from S3
+        const s3Files = await listFilesInBucket(bucketName, 'projet', id);
+
+        // Match database entries with S3 keys and fetch content for text and JSON files
+        const files = await Promise.all(dbFiles.map(async (dbFile) => {
+            const s3File = s3Files.find(s3File => s3File.key.includes(dbFile.media_key));
+            if (s3File) {
+                const fileContent = await getFileContent(bucketName, s3File.key);
+                return { ...dbFile, url: s3File.url, content: fileContent };
             }
-        });
+            return dbFile;
+        }));
+
+        res.render('projet_view.ejs',
+            {
+                projet: projet_data[0],
+                title: title,
+                files: files,
+                nonce: res.locals.nonce, // Pass nonce to template
+            });
+
+    } catch (error) {
+        console.error('Error fetching files:', error);
+        res.render('projet_view.ejs',
+            {
+                projet: {},
+                title: title,
+                files: [],
+                nonce: res.locals.nonce, // Pass nonce to template
+            });
+    }
 });
 
 
