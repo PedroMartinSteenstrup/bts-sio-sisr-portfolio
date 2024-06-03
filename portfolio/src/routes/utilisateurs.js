@@ -5,8 +5,24 @@ const bcrypt = require('bcryptjs');
 const { insertData, getData } = require('../utils_db');
 
 const SECRET_KEY = process.env.SECRET_KEY;
+// Pre-shared key pour création d'utilisateur initiale
+const preSharedKey = process.env.PRE_SHARED_KEY;
 
-// Middleware to authenticate JWT
+
+// Middleware pour valider pre-shared key
+function authenticate(req, res, next) {
+    // The API key is sent in a header
+    const apiKey = req.headers['x-api-key']; 
+    if (apiKey && apiKey === preSharedKey) {
+      // API valide, on continue
+      next();
+    } else {
+      // Clé API manquante ou invalide
+      res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
+// Middleware pour authentifier avec JWT
 const authenticateJWT = (req, res, next) => {
     const token = req.cookies.token;
     if (token) {
@@ -23,12 +39,13 @@ const authenticateJWT = (req, res, next) => {
     }
 };
 
-// Register route
-router.get('/register', (req, res) => {
-    res.render('register'); // Render the registration form
-});
+// Register route seulement via API
+// router.get('/register', (req, res) => {
+//     res.render('register'); // Render the registration form
+// });
 
-router.post('/register', async (req, res) => {
+// 
+router.post('/register', authenticate, async (req, res) => {
     const { username, password } = req.body;
 
     try {

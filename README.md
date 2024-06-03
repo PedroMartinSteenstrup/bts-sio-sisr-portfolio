@@ -108,3 +108,7 @@ Une fois l'application lancée et la route /register activée, on peut interagir
 curl -X POST http://localhost:3000/register -H "Content-Type: application/json" -d '{"username":"dsf","password":"password1"}'
 ```
 
+La clé pré-partagée est créée comme suit
+```shell
+openssl rand -base64 24
+```
