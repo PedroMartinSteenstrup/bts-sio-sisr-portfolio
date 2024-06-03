@@ -326,7 +326,22 @@ VALUES (
         TRUE,
         FALSE,
         FALSE,
-        11sqlQuery
+        11
+    ),
+    (
+        '15-02-2024',
+        CURRENT_DATE,
+        'Cartographie de l''architecture réseau de l''entreprise HomeToGo déployée sur AWS et bare metal (revue de code, inspection matériel)',
+        'Terraform, Terragrunt, Atlantis',
+        TRUE,
+        TRUE,
+        FALSE,
+        TRUE,
+        FALSE,
+        FALSE,
+        12
+    ),
+    (
         '30-01-2024',
         '21-02-2024',
         'Déploiement d''une application métier sur un système d''orchestration de services conteneurisés',
