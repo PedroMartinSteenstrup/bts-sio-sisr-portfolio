@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <title>Réalisations professionelles</title>
     <%- include('partials/head'); %>
 </head>
 <header>
@@ -15,67 +14,14 @@
     <a href="/">Accueil</a>
     <br>
     <h3>
-        <%= realisation.r_intitule %>
+        <%= projet.p_intitule %>
     </h3>
     <p> </p>
     <p>
-        Concepts clés: <%= realisation.r_description %>
+        Concepts clés: <%= projet.p_description %>
     </p>
 
-    <div class="container">
-        <ul class="ordering">
-            Compétences:
-            <li><span></span>
-                Mise en oeuvre
-            </li>
-            <li><span></span>
-                Non mise en oeuvre
-            </li>
-        </ul>
-        <% if (realisation.est_gestion_patrimoine) { %>
-            <div class="truebox">
-                <% } else { %>
-                    <div class="falsebox">
-                        <% } %>
-                            <p>Gérer le patrimoine informatique</p>
-                    </div>
-                    <% if (realisation.est_response_incidents) { %>
-                        <div class="truebox">
-                            <% } else { %>
-                                <div class="falsebox">
-                                    <% } %>
-                                        <p>Incidents, Assistance, Evolution</p>
-                                </div>
-    <% if (realisation.est_presence_en_ligne) { %>
-        <div class="truebox">
-            <% } else { %>
-                <div class="falsebox">
-                    <% } %>
-                        <p>Présence en ligne</p>
-                </div>
-                <% if (realisation.est_travail_mode_projet) { %>
-                    <div class="truebox">
-                        <% } else { %>
-                            <div class="falsebox">
-                                <% } %>
-                                    <p>Mode projet</p>
-                            </div>
-                            <% if (realisation.est_deploiement_service) { %>
-                                <div class="truebox">
-                                    <% } else { %>
-                                        <div class="falsebox">
-                                            <% } %>
-                                                <p>Mettre à disposition</p>
-                                        </div>
-    <% if (realisation.est_developpement_pro) { %>
-        <div class="truebox">
-            <% } else { %>
-                <div class="falsebox">
-                    <% } %>
-                        <p>Développement pro</p>
-                </div>
-        </div>
-        <% if (files && files.length > 0) { %>
+         <% if (files && files.length > 0) { %>
             <div class="carousel">
                 <% files.forEach(file => { %>
                     <div class="carousel-item">
@@ -104,7 +50,7 @@
             <p>No files available for this realisation.</p>
         <% } %>
 
-<a href="/realisations"><button>Retour à la liste des réalisations</button></a>
+<a href="/experiences"><button>Retour au sommaire</button></a>
 
 <script nonce="<%= nonce %>"
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

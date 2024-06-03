@@ -1,9 +1,8 @@
 const express = require("express");
-const fileUpload = require('express-fileupload');
 const path = require('path');
 const router = express.Router();
 const getData = require("../utils_db").getData;
-const { uploadFileAndSavePath, listFilesInBucket } = require('../utils_s3');
+const { listFilesInBucket } = require('../utils_s3');
 
 /**
  * @desc Lister toutes les réalisations recensées
@@ -20,7 +19,10 @@ router.get("/realisations", (req, res, next) => {
     getData(SQLquery)
         .then((data) => {
             res.render('realisations.ejs',
-                { realisations: data, title: req.app.locals.title });
+                {
+                    realisations: data,
+                    title: req.app.locals.title
+                });
         });
 });
 
@@ -70,69 +72,6 @@ router.get("/realisation/:id", (req, res, next) => {
 
 
 });
-
-// Enable files upload
-router.use(fileUpload({
-    createParentPath: true
-}));
-
-// Route to render the upload form
-router.get('/upload', (req, res) => {
-    const reject = () => {
-        res.setHeader("www-authenticate", "Basic");
-        res.sendStatus(401);
-    };
-
-    const authorization = req.headers.authorization;
-
-    if (!authorization) {
-        return reject();
-    }
-
-    const [username, password] = Buffer.from(
-        authorization.replace("Basic ", ""),
-        "base64"
-    )
-        .toString()
-        .split(":");
-
-    if (!(username === "ben" && password === "my-favorite-password")) {
-        return reject();
-    }
-
-    res.render('upload.ejs');
-});
-
-// Route to handle the file upload
-router.post('/upload', async (req, res) => {
-    try {
-        const realisationId = req.body.realisationId;
-        const file = req.files.file; // Access the uploaded file
-
-        // Define the path to save the uploaded file temporarily
-        const uploadPath = path.join(__dirname, 'uploads', file.name);
-
-        // Use the mv() method to place the file somewhere on your server
-        file.mv(uploadPath, async (err) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-
-            const bucketName = 'portfolio-bts'; // Replace with your actual bucket name
-
-            try {
-                await uploadFileAndSavePath(realisationId, uploadPath, bucketName);
-                res.send('File uploaded and path saved successfully');
-            } catch (error) {
-                console.error('Error during file upload and save path:', error);
-                res.status(500).send('Error during file upload and save path');
-            }
-        });
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
 
 // Export the router object so index.js can access it
 module.exports = router;

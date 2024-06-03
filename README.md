@@ -96,3 +96,12 @@ Avec policy.json
   ]
 }
 ```
+
+# Enregistrer un utilisateur
+
+Une fois l'application lancée et la route /register activée, on peut interagir avec le service via POST.
+
+```shell
+curl -X POST http://localhost:3000/register -H "Content-Type: application/json" -d '{"username":"dsf","password":"password1"}'
+```
+

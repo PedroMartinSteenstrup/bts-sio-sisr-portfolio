@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS realisations_docs (
 );
 CREATE TABLE IF NOT EXISTS utilisateurs (
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(50),
+    nom VARCHAR(50) UNIQUE NOT NULL,
     m2p_hash text not null UNIQUE,
     cree_le TIMESTAMPTZ NOT NULL default now()
 );

@@ -5,7 +5,8 @@
 
 const express = require("express");
 const router = express.Router();
-const {body, validationResult} = require("express-validator");
+const { body, validationResult } = require("express-validator");
+const { authenticateJWT } = require('./utilisateurs');
 
 /**
  * @desc Display the home page
@@ -14,16 +15,23 @@ router.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
-router.get('/test', (req, res) => {
-  let title = "Portfolio - Test";
-  res.send(`This is the server endpoint on port ` + process.env.NODE_PORT + `<title>`+title+`</title>`)
-});
 
-router.get('/settings', (req, res) => {
+router.get('/settings', authenticateJWT, (req, res) => {
   let title = "Portfolio - Paramètres";
-  res.send(`Not implemented <title>`+title+`</title>`)
+  res.render("parametres", { title });
 })
 
+router.get('/test', (req, res) => {
+  let title = "Portfolio - Test";
+  res.send(`This server is running on port ` + process.env.NODE_PORT +
+    `<br>` +
+    router.stack.forEach(function (r) {
+      if (r.route && r.route.path) {
+        console.log(r.route.path)
+      }
+    }) +
+    `<title>` + title + `</title>`)
+})
 /**
  * @desc Une page présentant brièvement la raison d'être du portfolio
  */

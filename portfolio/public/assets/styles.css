@@ -326,6 +326,28 @@ ul.ordering li:nth-child(2) span {
     color: #0056b3;
 }
 
+.nav-item form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.nav-item form button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s;
+    margin-left: 10px; /* Add margin to separate button from other elements */
+}
+
+.nav-item form button:hover {
+    color: #0056b3;
+    text-decoration: underline; /* Add underline on hover */
+}
+
 .content {
     padding: 20px;
 }

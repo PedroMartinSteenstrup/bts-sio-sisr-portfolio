@@ -9,5 +9,16 @@
         <li class="nav-item">
             <a class="nav-link" href="/about">A propos</a>
         </li>
+        <% if (user) { %>
+            <li class="nav-item">
+              <form action="/logout" method="POST" >
+                <button class="nav-link" type="submit" style="padding: 5px;color:inherit;cursor:pointer;">Logout</button>
+              </form>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Connexion</a>
+            </li>
+          <% } %>
     </ul>
 </nav>

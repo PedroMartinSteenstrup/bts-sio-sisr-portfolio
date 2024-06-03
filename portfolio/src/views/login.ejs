@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/head'); %>
+    <title>Login</title>
+</head>
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<body>
+    <h1>Connexion</h1>
+    <p>Si vous êtes examinateur BTS, le nom d'utilisateur sera <code>BTS</code> et le mot de passe celui indiqué sur la fiche de description d'une réalisation professionnelle </p>
+    
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <% if (typeof error !== 'undefined') { %>
+        <p style="color:red;"><%= error %></p>
+    <% } %>
+</body>
+<footer>
+    <%- include('partials/footer'); %>
+</footer>
+</html>
