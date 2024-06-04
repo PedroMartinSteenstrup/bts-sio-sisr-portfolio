@@ -284,10 +284,11 @@ ul.ordering li:nth-child(2) span {
 
 .pdf {
     width: 100%;
-    aspect-ratio: 16/9;
-    height: 100%;
+    aspect-ratio: 4/3;
+    height: 100vh;
     margin: 0;
     padding: 0;
+    border: none;
 }
 
 @media (max-width: 600px) {
