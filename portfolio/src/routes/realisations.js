@@ -29,49 +29,51 @@ router.get("/realisations", (req, res, next) => {
 /**
  * @desc Voir le détail d'une réalisation
  */
-router.get("/realisation/:id", (req, res, next) => {
+router.get("/realisation/:id", async (req, res, next) => {
     let bucketName = "portfolio-bts";
-    // Define the query to obtain the realisation_id from the database
-    getData(`SELECT * FROM realisations WHERE id = $1::int;`, [req.params.id])
-        .then((data) => {
-            // probably should do some validation here that the id is valid
-            let realisation_id = data[0].realisation_id;
-            try {
-                const getDocsQuery = 'SELECT * FROM realisations_docs WHERE realisation_id = $1::int';
-                getData(getDocsQuery, [realisation_id])
-                    .then(async (dbFiles) => {
-                        console.log(`dbFiles: =====>`);
-                        console.log(dbFiles);
-                        const s3Files = await listFilesInBucket(bucketName, 'realisation', realisation_id);
-                        console.log(`s3Files: =====>`);
-                        console.log(s3Files);
-                        // on match les entrées db avec les clé sur s3
-                        const files = dbFiles.map(dbFile => {
-                            const s3File = s3Files.find(s3File => s3File.key.includes(dbFile.media_key));
-                            return s3File ? { ...dbFile, url: s3File.url } : dbFile;
-                        });
-                        console.log(files);
-                        res.render('realisation_view.ejs',
-                            {
-                                realisation: data[0],
-                                title: req.app.locals.title,
-                                files: files,
-                                nonce: res.locals.nonce, // Pass nonce to template
-                            });
-                    });
-            } catch (error) {
-                console.error('Error fetching files:', error);
+    try {
+        // Define the query to obtain the realisation_id from the database
+        const projet_data = await getData(`SELECT * FROM realisations WHERE id = $1::int;`, [req.params.id]);
+        const realisation_id = projet_data[0].realisation_id;
+
+        if (projet_data.length === 0) {
+            res.status(404).send("Project not found");
+            return;
+        }
+        const dbFiles = await getData('SELECT * FROM realisations_docs WHERE realisation_id = $1::int', [projet_data[0].realisation_id]);
+
+        // Fetch files from S3
+        const s3Files = await listFilesInBucket(bucketName, 'projet', projet_data[0].realisation_id);
+
+        const getDocsQuery = 'SELECT * FROM realisations_docs WHERE realisation_id = $1::int';
+        getData(getDocsQuery, [realisation_id])
+            .then(async (dbFiles) => {
+                const s3Files = await listFilesInBucket(bucketName, 'realisation', realisation_id);
+                // on match les entrées db avec les clé sur s3
+                const files = dbFiles.map(dbFile => {
+                    const s3File = s3Files.find(s3File => s3File.key.includes(dbFile.media_key));
+                    return s3File ? { ...dbFile, url: s3File.url } : dbFile;
+                });
+
                 res.render('realisation_view.ejs',
                     {
-                        realisation: data[0],
+                        realisation: projet_data[0],
                         title: req.app.locals.title,
+                        files: files,
                         nonce: res.locals.nonce, // Pass nonce to template
                     });
-            }
-        });
-
-
+            });
+    } catch (error) {
+        console.error('Error fetching files:', error);
+        res.render('realisation_view.ejs',
+            {
+                realisation: projet_data[0],
+                title: req.app.locals.title,
+                nonce: res.locals.nonce, // Pass nonce to template
+            });
+    }
 });
+
 
 // Export the router object so index.js can access it
 module.exports = router;

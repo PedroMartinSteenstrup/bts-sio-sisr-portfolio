@@ -80,7 +80,6 @@ router.post('/login', async (req, res) => {
 
     try {
         const result = await getData('SELECT * FROM utilisateurs WHERE nom = $1', [username]);
-        console.log(result);
         if (result.length === 0) {
             return res.render('login', { error: 'Utilisateur inconnu' });
         }
