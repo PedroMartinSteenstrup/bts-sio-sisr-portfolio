@@ -201,7 +201,7 @@ VALUES (
     (
         '05-03-2024',
         '30-04-2024',
-        'Automatisation de la gestion du code, des resources (utilisation du paradigme dit IaC – Infrastructure as Code) ainsi que du déploiement',
+        'Automatisation de la gestion du code, des resources (Infrastructure as Code) et du déploiement',
         'Github Actions, Terraform, Ansible',
         TRUE,
         FALSE,
@@ -279,7 +279,7 @@ VALUES (
     (
         '20-04-2023',
         '07-06-2023',
-        'Mise en place d''une solution d''intégration/déploiement continu(e) sur les services de l''équipe Infra',
+        'Mise en place d''une solution d''intégration/déploiement continu(e) sur les services de l''équipe Data',
         'Github Actions, CI/CD',
         FALSE,
         TRUE,
@@ -292,7 +292,7 @@ VALUES (
     (
         '04-11-2023',
         '15-11-2023',
-        'Création d''une suite de Tests Unitaires afin de vérifier le avant que le code ne soit promu en production.',
+        'Création d''une suite de Tests Unitaires afin de vérifier les fonctionnalités avant que le code ne soit promu en production.',
         'PyTest, Github Actions',
         FALSE,
         TRUE,

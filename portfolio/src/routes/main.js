@@ -22,7 +22,6 @@ router.get('/settings', authenticateJWT, (req, res) => {
   d.setUTCSeconds(res.locals.user.exp)
 
   res.render("parametres", {
-    title: title,
     user: res.locals.user.username,
     exp: d,
     port: process.env.NODE_PORT,
